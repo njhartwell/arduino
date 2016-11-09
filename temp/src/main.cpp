@@ -13,6 +13,7 @@ void writeVoltage(int pin) {
     Serial.print(" ");
     Serial.print(voltage);
     Serial.print("\r\n");
+    delay(1000);
 }
 
 void loop() {
