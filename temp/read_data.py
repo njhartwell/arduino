@@ -11,9 +11,13 @@ _telegraf_conn = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 def parse_line(l):
     parts = l.rstrip().split(' ')
-    if len(parts) != 2:
+    if len(parts) != 3:
         return
-    pin, v_out_str = parts
+    pin, v_out_str, temp_out_str = parts
+
+    if pin != '14':
+        return
+
     v_out = float(v_out_str)
     milliamps = (v_out / 250) * 1000
     t_cel = _M * milliamps + _B
@@ -36,7 +40,11 @@ print "Using " + dev
 s = serial.Serial(dev, 9600)
 while True:
     try:
-        parsed = parse_line(s.readline())
+        line = s.readline()
+        print line
+        parsed = parse_line(line)
+        if not parsed:
+           continue 
         send_line(parsed)
     except Exception as e:
         print e
