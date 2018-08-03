@@ -2,6 +2,7 @@
 import serial
 import glob
 import socket
+import sys
 
 _M = 100.0/16
 _B = -(400.0/16)
@@ -35,7 +36,11 @@ def send_line(l):
     print msg
     _telegraf_conn.sendto(msg, _telegraf_addr)
 
-dev = glob.glob('/dev/tty.usb*')[0]
+if len(sys.argv) > 1:
+    dev = sys.argv[1]
+else:
+    dev = glob.glob('/dev/tty.usb*')[0]
+
 print "Using " + dev
 s = serial.Serial(dev, 9600)
 while True:

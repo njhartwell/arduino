@@ -1,10 +1,10 @@
 #include "Arduino.h"
 #include "LiquidCrystal.h"
-#include "Ultrasonic.h"
+//#include "Ultrasonic.h"
 
 int byteIn;
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-Ultrasonic ultrasonic(8,9);
+//Ultrasonic ultrasonic(8,9);
 
 void setup() {
   Serial.begin(9600);
@@ -24,9 +24,8 @@ float writeTemp(int pin) {
     int sensorValue = analogRead(pin);
     float voltage = sensorValue * (5.0/1023.0);
     float temp = tempFromVolts(voltage);
+    Serial.print("/temp/a");
     Serial.print(pin);
-    Serial.print(" ");
-    Serial.print(voltage);
     Serial.print(" ");
     Serial.print(temp);
     Serial.print("\r\n");
@@ -36,19 +35,17 @@ float writeTemp(int pin) {
 void loop() {
     float temp;
     temp = writeTemp(A0);
-    lcd.setCursor(0, 0);
+    /*lcd.setCursor(0, 0);
     lcd.print("A0: ");
     lcd.print(temp);
     lcd.print(" ");
     lcd.print(cToF(temp));
-    lcd.setCursor(0,1);
+    lcd.setCursor(0,1);*/
     temp = writeTemp(A1);
-    /*lcd.print("A1: ");
-    lcd.print(temp);
+    /*lcd.print(temp);
     lcd.print(" ");
     lcd.print(cToF(temp));
-    */
-    lcd.print(ultrasonic.Ranging(CM));
+    //lcd.print(ultrasonic.Ranging(CM));*/
     delay(1000);
 }
 
